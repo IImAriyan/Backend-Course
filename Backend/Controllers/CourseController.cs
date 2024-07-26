@@ -84,7 +84,7 @@ namespace Backend.Controllers
         }
         
         // Change Time
-        [HttpPost("Courses/Update/Date")]
+        [HttpPost("Courses/Update/Time")]
         public async Task<ActionResult<CourseEntity>> updateCourseTime(int id,string time)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
