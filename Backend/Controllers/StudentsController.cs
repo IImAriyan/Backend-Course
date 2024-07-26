@@ -14,6 +14,5 @@ namespace Backend.Controllers
         {
             return dbContext.Students;
         }
-        
     }
 }
