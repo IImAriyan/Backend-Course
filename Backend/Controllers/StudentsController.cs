@@ -50,6 +50,20 @@ namespace Backend.Controllers
         }
         
 
+        [HttpPost("Students/Update/{id}")]
+        public async Task<ActionResult<StudentsEntity>> updateStudent(int id,StudentsEntity data)
+        {
+            StudentsEntity Student =await dbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
+            if (Student == null) return NotFound();
+            Student.firstName = data.firstName;
+            Student.lastName = data.lastName;
+            Student.age = data.age;
+            Student.forCourse = data.forCourse;
+
+            dbContext.SaveChangesAsync();
+            
+            return Ok(Student);
+        }
         
         
     }   
