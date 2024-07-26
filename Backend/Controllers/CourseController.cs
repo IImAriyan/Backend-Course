@@ -83,6 +83,20 @@ namespace Backend.Controllers
             return Ok(Course);
         }
         
+        // Change Time
+        [HttpPost("Courses/Update/Date")]
+        public async Task<ActionResult<CourseEntity>> updateCourseTime(int id,string time)
+        {
+            CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
+
+            if (Course == null) return NotFound();
+
+            Course.Time = time;
+            dbContext.SaveChangesAsync();
+
+            return Ok(Course);
+        }
+        
         [HttpGet("Courses/Remove/{id}")]
         public async Task<ActionResult<CourseEntity>> removeCourse(int id)
         {
