@@ -1,6 +1,8 @@
 using Backend.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
@@ -14,5 +16,28 @@ namespace Backend.Controllers
         {
             return dbContext.Students;
         }
-    }
+
+
+        [HttpPost("Students/Add")]
+        public async Task<ActionResult<StudentsEntity>> AddStudent(StudentsEntity dto)
+        {
+            if (dto.forCourse == 0)
+            {
+                Response.StatusCode = 400;
+                 var errorResponse = new
+                {
+                    Status = "400",
+                    Message = "Ebteda Id Course Student Ra Vared Konid!"
+                };
+                return BadRequest(errorResponse);
+                
+                
+            }
+            EntityEntry<StudentsEntity> student = dbContext.Students.Add(dto);
+            await dbContext.SaveChangesAsync();
+            return Ok(student);
+        }
+        
+
+    }   
 }

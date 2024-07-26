@@ -10,7 +10,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<AppDbContext>(options =>
 
     options.UseSqlServer(
-        "Data Source=ARIYAN;Initial Catalog=Course_System_DB;Integrated Security = true;TrustServerCertificate=True")
+        "Data Source=ARIYAN;Initial Catalog=Course_DB;Integrated Security = true;TrustServerCertificate=True")
 );
 
 var app = builder.Build();
