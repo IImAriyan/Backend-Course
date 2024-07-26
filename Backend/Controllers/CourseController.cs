@@ -46,6 +46,7 @@ namespace Backend.Controllers
             if (Course == null) return NotFound();
 
             dbContext.Courses.Remove(Course);
+            dbContext.SaveChangesAsync();
             
             return Ok(Course);
         }
