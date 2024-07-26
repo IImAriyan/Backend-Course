@@ -37,7 +37,20 @@ namespace Backend.Controllers
             await dbContext.SaveChangesAsync();
             return Ok(student);
         }
+
+
+        [HttpGet("Students/{id}")]
+        public async Task<ActionResult<StudentsEntity>> readByID(int id)
+        {
+            StudentsEntity Student =await dbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (Student == null) return NotFound();
+
+            return Ok(Student);
+        }
         
 
+        
+        
     }   
 }
