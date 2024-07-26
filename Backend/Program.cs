@@ -1,8 +1,17 @@
+using Backend.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+
+    options.UseSqlServer(
+        "Data Source=ARIYAN;Initial Catalog=Course_System_DB;Integrated Security = true;TrustServerCertificate=True")
+);
 
 var app = builder.Build();
 
