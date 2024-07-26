@@ -35,7 +35,13 @@ namespace Backend.Controllers
             }
             EntityEntry<StudentsEntity> student = dbContext.Students.Add(dto);
             await dbContext.SaveChangesAsync();
-            return Ok(student);
+            var messageResponse = new
+            {
+                Status = 200,
+                Message = "Student Successfully Added! Name: "+dto.firstName+"  LastName: "+dto.lastName+" Age: "+dto.age
+                
+            };
+            return Ok(messageResponse);
         }
 
 
@@ -62,9 +68,34 @@ namespace Backend.Controllers
 
             dbContext.SaveChangesAsync();
             
-            return Ok(Student);
+            var messageResponse = new
+            {
+                Status = 200,
+                Message = "Student Successfully Updated"
+                
+            };
+            return Ok(messageResponse);
         }
-        
+
+
+        [HttpDelete("Students/Remove/{id}")]
+        public async Task<ActionResult<StudentsEntity>> RemoveStudent(int id)
+        {
+            StudentsEntity Student = await dbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (Student == null) return NotFound();
+
+            dbContext.Students.Remove(Student);
+            dbContext.SaveChangesAsync();
+
+            var messageResponse = new
+            {
+                Status = 200,
+                Message = "Student Successfully Removed"
+                
+            };
+            return Ok(messageResponse);
+        }
         
     }   
 }
