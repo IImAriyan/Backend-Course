@@ -28,13 +28,25 @@ namespace Backend.Controllers
         }
         
         // Read By One ID
-        [HttpGet("Courses/{id}")]
+        [HttpPost("Courses/{id}")]
         public async Task<ActionResult<CourseEntity>> getById(int id)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
 
             if (Course == null) return NotFound();
 
+            return Ok(Course);
+        }
+        
+        [HttpDelete("Courses/Remove/{id}")]
+        public async Task<ActionResult<CourseEntity>> removeCourse(int id)
+        {
+            CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
+
+            if (Course == null) return NotFound();
+
+            dbContext.Courses.Remove(Course);
+            
             return Ok(Course);
         }
         
