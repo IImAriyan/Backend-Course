@@ -38,7 +38,7 @@ namespace Backend.Controllers
             return Ok(Course);
         }
         
-        [HttpDelete("Courses/Remove/{id}")]
+        [HttpGet("Courses/Remove/{id}")]
         public async Task<ActionResult<CourseEntity>> removeCourse(int id)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
