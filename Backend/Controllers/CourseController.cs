@@ -55,6 +55,20 @@ namespace Backend.Controllers
             return Ok(Course);
         }
         
+        // Change Title
+        [HttpPost("Courses/Update/Title")]
+        public async Task<ActionResult<CourseEntity>> updateCourseTitle(int id,string title)
+        {
+            CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
+
+            if (Course == null) return NotFound();
+
+            Course.title = title;
+            dbContext.SaveChangesAsync();
+
+            return Ok(Course);
+        }
+        
         [HttpGet("Courses/Remove/{id}")]
         public async Task<ActionResult<CourseEntity>> removeCourse(int id)
         {
