@@ -23,7 +23,7 @@ namespace Backend.Controllers
             if (dto.forCourse == 0)
             {
                 Response.StatusCode = 400;
-                 var errorResponse = new
+                var errorResponse = new
                 {
                     Status = "400",
                     Message = "Ebteda Id Course Student Ra Vared Konid!"
@@ -31,14 +31,27 @@ namespace Backend.Controllers
                 return BadRequest(errorResponse);
 
             }
-            EntityEntry<StudentsEntity> student = dbContext.Students.Add(dto);
-            await dbContext.SaveChangesAsync();
+            
+            var Course = dbContext.Courses.Where(x=>x.Id == dto.forCourse).ToList();
+            if (Course.Count == 0)
+            {
+                Response.StatusCode = 404;
+                var errorResponse = new
+                {
+                    Status = "404",
+                    Message = "Chenin Course i Peyda Nashod!"
+                };
+                return BadRequest(errorResponse);
+            }
+            
             var messageResponse = new
             {
                 Status = 200,
                 Message = "Student Successfully Added! Name: "+dto.firstName+"  LastName: "+dto.lastName+" Age: "+dto.age
                 
             };
+            EntityEntry<StudentsEntity> student = dbContext.Students.Add(dto);
+            await dbContext.SaveChangesAsync();
             return Ok(messageResponse);
         }
 
@@ -82,16 +95,15 @@ namespace Backend.Controllers
             StudentsEntity Student = await dbContext.Students.FirstOrDefaultAsync(x => x.Id == id);
 
             if (Student == null) return NotFound();
-
-            dbContext.Students.Remove(Student);
-            dbContext.SaveChangesAsync();
-
             var messageResponse = new
             {
                 Status = 200,
                 Message = "Student Successfully Removed"
                 
             };
+            
+            dbContext.Students.Remove(Student);
+            await dbContext.SaveChangesAsync();
             return Ok(messageResponse);
         }
         
