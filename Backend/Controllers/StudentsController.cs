@@ -2,7 +2,6 @@ using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Newtonsoft.Json;
 
 namespace Backend.Controllers
 {
@@ -30,8 +29,7 @@ namespace Backend.Controllers
                     Message = "Ebteda Id Course Student Ra Vared Konid!"
                 };
                 return BadRequest(errorResponse);
-                
-                
+
             }
             EntityEntry<StudentsEntity> student = dbContext.Students.Add(dto);
             await dbContext.SaveChangesAsync();

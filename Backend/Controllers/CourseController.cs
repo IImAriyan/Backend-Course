@@ -2,6 +2,7 @@ using Backend.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Backend.Controllers
 {
@@ -109,8 +110,17 @@ namespace Backend.Controllers
             
             return Ok(Course);
         }
-        
 
+
+        [HttpGet("Courses/Students/{id}")]
+        public async Task<ActionResult<StudentsEntity>> findCourseStudents(int id)
+        {
+            var Student = dbContext.Students.Where(x => x.forCourse == id).ToList();
+            
+            if (Student.Count == 0) return NotFound();
+            
+            return Ok(Student);
+        }
         
     }
 }

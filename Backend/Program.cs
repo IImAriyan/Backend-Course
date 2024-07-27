@@ -8,12 +8,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-
-    options.UseSqlServer(
-        "Data Source=ARIYAN;Initial Catalog=Course_DB;Integrated Security = true;TrustServerCertificate=True")
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"))
 );
 
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await context.Database.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
