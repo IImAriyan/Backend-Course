@@ -16,7 +16,9 @@ namespace Backend.Controllers
         {
             return dbContext.Courses;
         }
-
+        // Get Courses
+        
+        
         
         // Add Course
         [HttpPost("Courses/Add")]
@@ -26,10 +28,19 @@ namespace Backend.Controllers
 
             await dbContext.SaveChangesAsync();
 
-            return Ok(Course);
+            Response.StatusCode = 200;
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Successfully Added"
+            };
+            
+            return Ok(MessageResponse);
         }
+        // Add Course
         
-
+        
+        
         // Read By One ID
         [HttpPost("Courses/{id}")]
         public async Task<ActionResult<CourseEntity>> getById(int id)
@@ -40,7 +51,11 @@ namespace Backend.Controllers
 
             return Ok(Course);
         }
-
+        // Read By One ID
+        
+        
+        
+        // Update Course
         [HttpPost("Courses/Update")]
         public async Task<ActionResult<CourseEntity>> updateCourse(int id,CourseEntity formData)
         {
@@ -53,11 +68,20 @@ namespace Backend.Controllers
             Course.Time = formData.Time;
             dbContext.SaveChangesAsync();
 
-            return Ok(Course);
+            Response.StatusCode = 200;
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Successfully Updated"
+            };
+            
+            return Ok(MessageResponse);
         }
+        // Update Course
         
-        // Change Title
-        [HttpPost("Courses/Update/Title")]
+        
+        // Change Title ===================================================================================
+        [HttpPost("Courses/Update/Title/{id}")]
         public async Task<ActionResult<CourseEntity>> updateCourseTitle(int id,string title)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
@@ -67,11 +91,20 @@ namespace Backend.Controllers
             Course.title = title;
             dbContext.SaveChangesAsync();
 
-            return Ok(Course);
+            Response.StatusCode = 200;
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Title Successfully Updated"
+            };
+            
+            return Ok(MessageResponse);
         }
+        // Change Title ===================================================================================
         
-        // Change Date
-        [HttpPost("Courses/Update/Date")]
+        
+        //=================== Change Date ================================================================
+        [HttpPost("Courses/Update/Date/{id}")]
         public async Task<ActionResult<CourseEntity>> updateCourseDate(int id,string date)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
@@ -81,11 +114,20 @@ namespace Backend.Controllers
             Course.date = date;
             dbContext.SaveChangesAsync();
 
-            return Ok(Course);
+            Response.StatusCode = 200;
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Date Successfully Updated"
+            };
+            
+            return Ok(MessageResponse);
         }
+        //=================== Change Date ================================================================
+        
         
         // Change Time
-        [HttpPost("Courses/Update/Time")]
+        [HttpPost("Courses/Update/Time/{id}")]
         public async Task<ActionResult<CourseEntity>> updateCourseTime(int id,string time)
         {
             CourseEntity Course = await dbContext.Courses.FirstOrDefaultAsync(x=>x.Id == id);
@@ -95,9 +137,20 @@ namespace Backend.Controllers
             Course.Time = time;
             dbContext.SaveChangesAsync();
 
-            return Ok(Course);
+            Response.StatusCode = 200;
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Time Successfully Updated"
+            };
+            
+            return Ok(MessageResponse);
         }
+        // Change Time
         
+        
+        
+        // Remove Course
         [HttpGet("Courses/Remove/{id}")]
         public async Task<ActionResult<CourseEntity>> removeCourse(int id)
         {
@@ -108,10 +161,19 @@ namespace Backend.Controllers
             dbContext.Courses.Remove(Course);
             dbContext.SaveChangesAsync();
             
-            return Ok(Course);
+            var MessageResponse = new
+            {
+                Status = 200,
+                Message = "Course Successfully Removed"
+            };
+            
+            return Ok(MessageResponse);
         }
-
-
+        // Remove Course
+        
+        
+        
+        // Get Students by Course ID
         [HttpGet("Courses/Students/{id}")]
         public async Task<ActionResult<StudentsEntity>> findCourseStudents(int id)
         {
@@ -121,6 +183,8 @@ namespace Backend.Controllers
             
             return Ok(Student);
         }
+        // Get Students by Course ID
+        
         
     }
 }
