@@ -34,7 +34,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyOrigin().AllowAnyHeader());
-app.UseMvc();
+
 
 app.UseRouting();
 
@@ -45,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller}/{action}/{id?}");
+    pattern: "{controller=Course}/{action}/{id?}");
 
 app.Run();
