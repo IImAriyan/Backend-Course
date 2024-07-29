@@ -11,6 +11,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"))
 );
 
+builder.Services.AddCors();
+
 
 var app = builder.Build();
 
@@ -31,6 +33,9 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyOrigin().AllowAnyHeader());
+app.UseMvc();
+
 app.UseRouting();
 
 app.UseSwagger();
@@ -40,6 +45,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller}/{action}/{id?}");
 
 app.Run();

@@ -1,4 +1,5 @@
 using Backend.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -7,6 +8,7 @@ namespace Backend.Controllers
 {
     [Route("api")]
     [ApiController]
+    
     public class StudentsController(AppDbContext dbContext) : ControllerBase
     {
         // Get Students
